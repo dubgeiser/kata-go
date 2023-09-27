@@ -1,6 +1,6 @@
 package algorithms
 
-func bsort(arr []int) {
+func BubbleSort(arr []int) {
 	l := len(arr)
 	for l > 0 {
 		l--

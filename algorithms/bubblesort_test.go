@@ -20,13 +20,13 @@ func assertEqual(t *testing.T, expected any, actual any) {
 func TestSorted(t *testing.T) {
 	original := []int{1, 2}
 	sorted := cpSlice(original)
-	bsort(sorted)
+	BubbleSort(sorted)
 	assertEqual(t, original, sorted)
 }
 
 func TestUnsorted(t *testing.T) {
 	original := []int{1, 4, 3, 2}
 	expected := []int{1, 2, 3, 4}
-	bsort(original)
+	BubbleSort(original)
 	assertEqual(t, expected, original)
 }
