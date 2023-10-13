@@ -26,7 +26,7 @@ func assertIndexOutOfBoundsPanic(t *testing.T) {
 }
 
 func TestNew(t *testing.T) {
-	l := New()
+	l := New[int]()
 	assertEquals(t, 0, l.Length)
 	if l.head != nil {
 		t.Fatal("head should be nil")
@@ -38,7 +38,7 @@ func TestNew(t *testing.T) {
 
 func TestAppend(t *testing.T) {
 	expected := 1
-	l := New()
+	l := New[int]()
 	l.Append(expected)
 	if l.head == nil {
 		t.Fatal("head should not be nil!")
@@ -49,7 +49,7 @@ func TestAppend(t *testing.T) {
 }
 
 func TestAppendMultiple(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	assertEquals(t, 2, l.tail.Value)
@@ -62,7 +62,7 @@ func TestAppendMultiple(t *testing.T) {
 
 func TestPrepend(t *testing.T) {
 	expected := 1
-	l := New()
+	l := New[int]()
 	l.Prepend(expected)
 	if l.head == nil {
 		t.Fatal("head should not be nil!")
@@ -73,7 +73,7 @@ func TestPrepend(t *testing.T) {
 }
 
 func TestPrependMultiple(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Prepend(1)
 	l.Prepend(2)
 	assertEquals(t, 2, l.head.Value)
@@ -85,7 +85,7 @@ func TestPrependMultiple(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -95,13 +95,13 @@ func TestGet(t *testing.T) {
 }
 
 func TestGetFromOneElementList(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	assertEquals(t, 1, l.Get(0))
 }
 
 func TestGetOutOfBounds(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -110,7 +110,7 @@ func TestGetOutOfBounds(t *testing.T) {
 }
 
 func TestRemoveExisting(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -123,7 +123,7 @@ func TestRemoveExisting(t *testing.T) {
 }
 
 func TestRemoveUnexisting(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -134,7 +134,7 @@ func TestRemoveUnexisting(t *testing.T) {
 }
 
 func TestRemoveFromEmptyList(t *testing.T) {
-	l := New()
+	l := New[int]()
 	if l.Remove(123) {
 		t.Fatalf("Removing an non-existing element should be unsuccessful")
 	}
@@ -142,7 +142,7 @@ func TestRemoveFromEmptyList(t *testing.T) {
 }
 
 func TestRemoveFirst(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -154,7 +154,7 @@ func TestRemoveFirst(t *testing.T) {
 }
 
 func TestRemoveLast(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -166,7 +166,7 @@ func TestRemoveLast(t *testing.T) {
 }
 
 func TestRemoveFromListWithOneElement(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	if !l.Remove(1) {
 		t.Fatalf("Removing existing element from one-element list should be successful")
@@ -175,7 +175,7 @@ func TestRemoveFromListWithOneElement(t *testing.T) {
 }
 
 func TestInsertAtIndex(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -184,7 +184,7 @@ func TestInsertAtIndex(t *testing.T) {
 }
 
 func TestInsertAtHead(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -194,7 +194,7 @@ func TestInsertAtHead(t *testing.T) {
 }
 
 func TestInsertAtTail(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -204,7 +204,7 @@ func TestInsertAtTail(t *testing.T) {
 }
 
 func TestInsertListWithOneElement(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.InsertAt(0, 5)
 	assertEquals(t, 5, l.Get(0))
@@ -212,7 +212,7 @@ func TestInsertListWithOneElement(t *testing.T) {
 }
 
 func TestInsertOutOfBounds(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -221,7 +221,7 @@ func TestInsertOutOfBounds(t *testing.T) {
 }
 
 func TestRemoveAtOutOfBoundsIndex(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -230,7 +230,7 @@ func TestRemoveAtOutOfBoundsIndex(t *testing.T) {
 }
 
 func TestRemoveAt(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -240,7 +240,7 @@ func TestRemoveAt(t *testing.T) {
 }
 
 func TestRemoveAtHead(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -251,7 +251,7 @@ func TestRemoveAtHead(t *testing.T) {
 }
 
 func TestRemoveAtTail(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -263,7 +263,7 @@ func TestRemoveAtTail(t *testing.T) {
 }
 
 func TestSet(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -272,7 +272,7 @@ func TestSet(t *testing.T) {
 }
 
 func TestSetOutOfBounds(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -281,7 +281,7 @@ func TestSetOutOfBounds(t *testing.T) {
 }
 
 func TestValuesAppended(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Append(1)
 	l.Append(2)
 	l.Append(3)
@@ -293,7 +293,7 @@ func TestValuesAppended(t *testing.T) {
 }
 
 func TestValuesPrepended(t *testing.T) {
-	l := New()
+	l := New[int]()
 	l.Prepend(1)
 	l.Prepend(2)
 	l.Prepend(3)
@@ -302,4 +302,25 @@ func TestValuesPrepended(t *testing.T) {
 	assertEquals(t, 3, vals[0])
 	assertEquals(t, 2, vals[1])
 	assertEquals(t, 1, vals[2])
+}
+
+func TestTyping(t *testing.T) {
+	l := New[string]()
+	l.Append("aaa")
+	l.Append("bbb")
+	assertEquals(t, "bbb", l.Get(1))
+	assertEquals(t, "aaa", l.Get(0))
+	assertEquals(t, "bbbaaa", l.Get(1) + l.Get(0))
+	l.Remove("aaa")
+	assertEquals(t, 1, l.Length)
+	assertEquals(t, "bbb", l.Get(0))
+}
+
+func TestValuesRespectsTyping(t *testing.T) {
+	l := New[int]()
+	l.Prepend(1)
+	l.Prepend(2)
+	l.Prepend(3)
+	vals := l.Values()
+	assertEquals(t, 6, vals[0] + vals[1] + vals[2])
 }

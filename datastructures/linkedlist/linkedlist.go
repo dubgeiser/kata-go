@@ -2,10 +2,10 @@ package linkedlist
 
 import "fmt"
 
-type Node struct {
-	Value    any
-	next     *Node
-	previous *Node
+type Node[T comparable] struct {
+	Value    T
+	next     *Node[T]
+	previous *Node[T]
 }
 
 type IndexOutOfBounds struct {
@@ -17,24 +17,24 @@ func (e *IndexOutOfBounds) Error() string {
 	return fmt.Sprintf("Index [%v] is out of bounds [0, %v]", e.Index, e.MaxIndex)
 }
 
-func newNode(v any) *Node {
-	n := Node{v, nil, nil}
+func newNode[T comparable](v T) *Node[T] {
+	n := Node[T]{Value: v, next: nil, previous: nil}
 	return &n
 }
 
 // A doubly linked list
-type LinkedList struct {
-	head   *Node
-	tail   *Node
+type LinkedList[T comparable] struct {
+	head   *Node[T]
+	tail   *Node[T]
 	Length int
 }
 
-func New() *LinkedList {
-	l := LinkedList{nil, nil, 0}
+func New[T comparable]() *LinkedList[T] {
+	l := LinkedList[T]{nil, nil, 0}
 	return &l
 }
 
-func (self *LinkedList) Append(v any) {
+func (self *LinkedList[T]) Append(v T) {
 	self.Length++
 	n := newNode(v)
 	tmp := self.tail
@@ -48,7 +48,7 @@ func (self *LinkedList) Append(v any) {
 	}
 }
 
-func (self *LinkedList) Prepend(v any) {
+func (self *LinkedList[T]) Prepend(v T) {
 	self.Length++
 	n := newNode(v)
 	tmp := self.head
@@ -62,13 +62,13 @@ func (self *LinkedList) Prepend(v any) {
 	}
 }
 
-func (self *LinkedList) Get(idx int) any {
+func (self *LinkedList[T]) Get(idx int) T {
 	self.panicIfOutOfBounds(idx)
 	return self.getNodeAt(idx).Value
 }
 
 // Remove the first occurrence of `v` in the list
-func (self *LinkedList) Remove(v any) bool {
+func (self *LinkedList[T]) Remove(v T) bool {
 	for n := self.head; n != nil; n = n.next {
 		if n.Value != v {
 			continue
@@ -89,7 +89,7 @@ func (self *LinkedList) Remove(v any) bool {
 	return false
 }
 
-func (self *LinkedList) RemoveAt(idx int) {
+func (self *LinkedList[T]) RemoveAt(idx int) {
 	self.panicIfOutOfBounds(idx)
 	n := self.getNodeAt(idx)
 	if n.previous != nil {
@@ -105,7 +105,7 @@ func (self *LinkedList) RemoveAt(idx int) {
 	self.Length--
 }
 
-func (self *LinkedList) InsertAt(idx int, v any) {
+func (self *LinkedList[T]) InsertAt(idx int, v T) {
 	self.panicIfOutOfBounds(idx)
 	n := self.getNodeAt(idx)
 	nNode := newNode(v)
@@ -123,13 +123,13 @@ func (self *LinkedList) InsertAt(idx int, v any) {
 	}
 }
 
-func (self *LinkedList) Set(i int, v any) {
+func (self *LinkedList[T]) Set(i int, v T) {
 	self.panicIfOutOfBounds(i)
 	self.getNodeAt(i).Value = v
 }
 
-func (self *LinkedList) Values() []any {
-	var vals []any
+func (self *LinkedList[T]) Values() []T {
+	var vals []T
 	for n := self.head; n != nil; n = n.next {
 		vals = append(vals, n.Value)
 	}
@@ -138,7 +138,7 @@ func (self *LinkedList) Values() []any {
 
 // Get a Node at a given index.
 // Assume i is in bounds.
-func (self *LinkedList) getNodeAt(idx int) *Node {
+func (self *LinkedList[T]) getNodeAt(idx int) *Node[T] {
 	n := self.head
 	for i := 0; i < self.Length; i++ {
 		if i == idx {
@@ -149,7 +149,7 @@ func (self *LinkedList) getNodeAt(idx int) *Node {
 	return nil
 }
 
-func (self *LinkedList) panicIfOutOfBounds(i int) {
+func (self *LinkedList[T]) panicIfOutOfBounds(i int) {
 	if i >= self.Length {
 		panic(&IndexOutOfBounds{i, self.Length - 1})
 	}
